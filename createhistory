@@ -8,7 +8,7 @@ git checkout dev sample
 git checkout dev package.json
 git checkout dev package-lock.json
 echo history>.gitignore
-
+mkdir src
 git add -A 
 git commit -m "sample"
 
