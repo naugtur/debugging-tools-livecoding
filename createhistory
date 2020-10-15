@@ -1,0 +1,27 @@
+#!/bin/bash
+
+git checkout main
+git checkout 0
+git branch -D demo
+git checkout -b demo
+git checkout dev history
+git checkout dev sample
+git checkout dev package.json
+git checkout dev package-lock.json
+
+git add -A 
+git commit -m "sample"
+
+
+for var in history/*
+do
+    echo "$var"
+    rm -fr ./src/*
+    cp -r $var/* ./src/
+    message=`cat ./src/COMMIT_MESSAGE`
+    rm ./src/COMMIT_MESSAGE
+    git add ./src
+    git commit -am "$message"
+done
+
+
