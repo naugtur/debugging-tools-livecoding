@@ -5,6 +5,7 @@ git branch -D demo
 git checkout -b demo
 git checkout dev history
 git checkout dev sample
+git checkout dev .vscode
 git checkout dev package.json
 git checkout dev package-lock.json
 echo history>.gitignore
