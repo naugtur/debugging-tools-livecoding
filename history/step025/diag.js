@@ -10,6 +10,7 @@ function getLocation(stack) {
   if (!identified) {
     return null;
   }
+  return identified;
 }
 
 const data = new Map();

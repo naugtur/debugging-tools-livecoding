@@ -1,0 +1,10 @@
+#!/bin/bash
+
+npx prettier -w .
+
+for var in history/*
+do
+    echo "================================================================================================  $var"
+    timeout 1s node --trace-event-categories node.perf --require=./$var/diag.js sample/1minimal.js
+
+done

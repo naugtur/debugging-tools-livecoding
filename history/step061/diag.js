@@ -1,6 +1,6 @@
 "use strict";
 const asyncHooks = require("async_hooks");
-const { performance } = require('perf_hooks')
+const { performance } = require("perf_hooks");
 const filePath = process.argv[1];
 
 function printMessage(message) {
@@ -32,41 +32,45 @@ const asyncHook = asyncHooks.createHook({
     }
   },
 
-  before (asyncId) {
-    const info = data.get(asyncId)
-    if (!info) return
-    info.t1 = hiResTimeMs()
-    performance.mark('before' + asyncId)
+  before(asyncId) {
+    const info = data.get(asyncId);
+    if (!info) return;
+    info.t1 = hiResTimeMs();
+    performance.mark("before" + asyncId);
   },
 
   after(asyncId) {
     const info = data.get(asyncId);
     if (!info) return;
-    const t2 = hiResTimeMs()
-    if(t2-t1>100){
-      printMessage(`slowness detected here ${info.location}`)
+    const t2 = hiResTimeMs();
+    if (t2 - info.t1 > 100) {
+      printMessage(`slowness detected ${info.location}`);
     }
-    performance.mark('after' + asyncId)
-    performance.measure(`[${pad(asyncId)} from ${pad(info.triggerAsyncId)}] ${info.location}`, 'before' + asyncId, 'after' + asyncId)
+    performance.mark("after" + asyncId);
+    performance.measure(
+      `[${pad(asyncId)} from ${pad(info.triggerAsyncId)}] ${info.location}`,
+      "before" + asyncId,
+      "after" + asyncId
+    );
     printMessage(`a [${info.triggerAsyncId}->${asyncId}] ${info.location}`);
   },
 
   destroy(asyncId) {
-    data.delete(asyncId)
-  }
+    data.delete(asyncId);
+  },
 });
 asyncHook.enable();
 
-function hiResTimeMs () {
-  const t = process.hrtime()
-  return t[0] * 1000000 + t[1] / 1000000
+function hiResTimeMs() {
+  const t = process.hrtime();
+  return t[0] * 1000000 + t[1] / 1000000;
 }
 
-function pad (num) {
-  if (num < 10) return '00000' + num
-  if (num < 100) return '0000' + num
-  if (num < 1000) return '000' + num
-  if (num < 10000) return '00' + num
-  if (num < 100000) return '0' + num
-  return num
+function pad(num) {
+  if (num < 10) return "00000" + num;
+  if (num < 100) return "0000" + num;
+  if (num < 1000) return "000" + num;
+  if (num < 10000) return "00" + num;
+  if (num < 100000) return "0" + num;
+  return num;
 }

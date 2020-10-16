@@ -1,6 +1,6 @@
 "use strict";
 const asyncHooks = require("async_hooks");
-const { performance } = require('perf_hooks')
+const { performance } = require("perf_hooks");
 const filePath = process.argv[1];
 
 function printMessage(message) {
@@ -32,10 +32,10 @@ const asyncHook = asyncHooks.createHook({
     }
   },
 
-  before (asyncId) {
-    const info = data.get(asyncId)
-    if (!info) return
-    performance.mark('before' + asyncId)
+  before(asyncId) {
+    const info = data.get(asyncId);
+    if (!info) return;
+    performance.mark("before" + asyncId);
   },
 
   after(asyncId) {
@@ -45,7 +45,7 @@ const asyncHook = asyncHooks.createHook({
   },
 
   destroy(asyncId) {
-    data.delete(asyncId)
-  }
+    data.delete(asyncId);
+  },
 });
 asyncHook.enable();

@@ -38,7 +38,7 @@ const asyncHook = asyncHooks.createHook({
   },
 
   destroy(asyncId) {
-    data.delete(asyncId)
-  }
+    data.delete(asyncId);
+  },
 });
 asyncHook.enable();

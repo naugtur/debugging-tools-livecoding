@@ -5,7 +5,7 @@
   "license": "AGPL-3.0-or-later",
   "description": "A demo repository for learning Node.js APIs for diagnostics",
   "scripts": {
-    "test": "AID_HOOK_SCOPE=1simple.js node --inspect --require=debugging-aid/hooks  --trace-event-categories node.perf sample/1simple.js"
+    "test": "AID_HOOK_SCOPE=2simple.js node --inspect --require=debugging-aid/hooks  --trace-event-categories node.perf sample/2simple.js"
   },
   "dependencies": {
     "ioredis": "^4.17.3",
