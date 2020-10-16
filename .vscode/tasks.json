@@ -11,18 +11,20 @@
 			"label": "gitnext",
 			"type": "shell",
 			"command": "./.vscode/gitnext",
-			"options":{
-				"env":{
+			"problemMatcher": [],
+			"options": {
+				"env": {
 					"BRANCH": "demo"
 				}
 			}
 		},
 		{
-			"label": "gitprev",
+			"label": "gitback",
 			"type": "shell",
 			"command": "./.vscode/gitback",
-			"options":{
-				"env":{
+			"problemMatcher": [],
+			"options": {
+				"env": {
 					"BRANCH": "demo"
 				}
 			}
