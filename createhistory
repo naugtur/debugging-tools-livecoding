@@ -1,19 +1,26 @@
 #!/bin/bash
 
 git checkout main
+git checkout -- .
 git tag -d 0
 git branch -D demo
 git checkout -b demo
+git checkout dev .vscode
+echo >>.gitignore
+echo './history'>>.gitignore
+git add -A
+git commit -am "tools"
+git tag 0
 git checkout dev history
 git checkout dev sample
-git checkout dev .vscode
 git checkout dev package.json
 git checkout dev package-lock.json
-echo history>.gitignore
+git restore --staged *
+git status
 mkdir src
-git add -A 
-git commit -m "sample"
-git tag 0
+git add -A
+git status 
+git commit -am "sample"
 
 
 for var in history/*
@@ -27,6 +34,7 @@ do
     git commit -am "$message"
 done
 
+rm -fr history
 git checkout 0
 
 

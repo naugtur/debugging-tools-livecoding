@@ -1,14 +1,10 @@
 "use strict";
 const asyncHooks = require("async_hooks");
 
-const allAsyncFinished = [];
-
 const asyncHook = asyncHooks.createHook({
   after(asyncId) {
-    allAsyncFinished.push(asyncId);
+    // a function finished its execution in an async hop
   },
 });
 
 asyncHook.enable();
-
-setTimeout(() => console.log(allAsyncFinished), 1000);
