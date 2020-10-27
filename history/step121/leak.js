@@ -3,11 +3,7 @@ const v8 = require("v8");
 
 const { PerformanceObserver } = require("perf_hooks");
 
-function printMessage(message) {
-  process._rawDebug(message);
-}
-
-let previous = {
+const previous = {
   new_space: 0,
   old_space: 0,
   large_object_space: 0,
@@ -36,7 +32,7 @@ const obs = new PerformanceObserver((list) => {
           }`
       )
     );
-    previous = current;
+    Object.assign(previous, current);
   }
 });
 obs.observe({ entryTypes: ["gc"], buffered: false });

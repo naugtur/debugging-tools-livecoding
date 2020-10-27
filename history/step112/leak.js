@@ -3,10 +3,6 @@ const v8 = require("v8");
 
 const { PerformanceObserver } = require("perf_hooks");
 
-function printMessage(message) {
-  process._rawDebug(message);
-}
-
 const obs = new PerformanceObserver((list) => {
   if (list.getEntries().length) {
     console.log(
