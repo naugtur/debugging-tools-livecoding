@@ -9,12 +9,33 @@ highlightTheme: "dracula"
 
 ---
 
+## Why?
+
+*learning through play*
+
+---
+
+## Some Real tools
+
+- Profiling with devtools (`--inspect`)
+- [https://clinicjs.org/](https://clinicjs.org/)
+
+
+---
+
 ## Introduction
 
 ---
 
+## Ok, wait
+
+Who wants to skip event loop and asynchronicity explanations?
+
+---
+
+
 # 🎣
-## Async hooks?
+## Async hooks
 
 ---
 
@@ -107,7 +128,8 @@ hook.enable();
 
 ---
 
-## Let's play
+# 🏂 
+## Let's have some fun
 
 ---
 
@@ -117,6 +139,7 @@ hook.enable();
 ---
 
 
+# 🌵
  - Do not use the resource reference in `init`.  
  I didn't even tell you it exists.
  - Be aware hooks have a performance impact
@@ -136,6 +159,32 @@ You'll definitely use that soon.
 ## Perf tracing is cool though
 
 Use it whenever you need!
+
+```bash
+node --trace-event-categories node.perf app.js
+```
+
+```js
+const { performance } = require('perf_hooks');
+performance.mark('markID1')
+performance.measure('description', 'markID1','markId2')
+```
+```bash
+  node_trace.1.log
+```
+
+---
+
+## `V8` binding
+
+```js
+const v8 = require("v8");
+
+v8.getHeapSnapshot()
+v8.getHeapStatistics()
+v8.setFlagsFromString(flags)
+v8.writeHeapSnapshot([filename])
+```
 
 ---
 
@@ -161,3 +210,6 @@ obs.observe({ entryTypes: ['function'], buffered: true })
  - `function` (Node.js only)
  - `http2` (Node.js only)
  - `http` (Node.js only)
+
+
+---
