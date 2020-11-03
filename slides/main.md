@@ -11,6 +11,10 @@ highlightTheme: "dracula"
 
 ## Why?
 
+---
+
+# 🏓
+
 *learning through play*
 
 ---
@@ -23,16 +27,33 @@ highlightTheme: "dracula"
 
 ---
 
-## Introduction
+## Explanations
+# 🔎
 
 ---
 
-## Ok, wait
+## Event loop 
+# 🏃➿
 
-Who wants to skip event loop and asynchronicity explanations?
+*Did you pay attention in the talks on Monday?*
 
 ---
 
+## Obvious simplification
+
+```js
+   EVENT LOOP                       EVERYTHING ELSE
+
+  while (true){
+    get from the queue
+    run it  --->  ( schedules work ) --->   <--- ( events )
+  }                                       |
+                                          V
+                              ( add callback to the queue )
+
+```
+
+---
 
 # 🎣
 ## Async hooks
@@ -43,7 +64,7 @@ Who wants to skip event loop and asynchronicity explanations?
 
 ---
 
-### init
+### `init`
 
 ```js
 
@@ -57,7 +78,7 @@ Runs within current call stack
 
 ---
 
-### promiseResolve
+### `promiseResolve`
 
 ```js
 
@@ -70,7 +91,7 @@ Promise.resolve() 👋 👋
 
 ---
 
-### before
+### `before`
 
 ```js
 
@@ -83,7 +104,7 @@ Promise.resolve()
 
 ---
 
-### after
+### `after`
 
 ```js
 
@@ -96,7 +117,7 @@ Promise.resolve()
 
 ---
 
-### destroy
+### `destroy`
 
 ```js
 
@@ -133,8 +154,30 @@ hook.enable();
 
 ---
 
+## Perf tracing 
+
+```bash
+node --trace-event-categories node.perf app.js
+```
+
+```js
+const { performance } = require('perf_hooks');
+performance.mark('markID1')
+
+  ⏱
+
+performance.mark('markID2')
+performance.measure('description', 'markID1','markID2')
+```
+
+```bash
+  node_trace.1.log
+```
+
+---
+
 ### Ok, now for real
-## Should I use it?
+## Should I use async_hooks?
 
 ---
 
@@ -145,7 +188,7 @@ hook.enable();
  - Be aware hooks have a performance impact
  - Your code in hooks can have even more impact
  - Did I mention it's still experimental?  
- - Some things are only possible with hooks
+ - Some things are only possible with hooks 🎉
 
 ---
 
@@ -156,22 +199,41 @@ You'll definitely use that soon.
 
 ---
 
-## Perf tracing is cool though
+## Use perf tracing!
 
-Use it whenever you need!
+And not neccessarily as trace log to a file.
 
-```bash
-node --trace-event-categories node.perf app.js
-```
+---
 
+## PerformanceObserver
 ```js
-const { performance } = require('perf_hooks');
-performance.mark('markID1')
-performance.measure('description', 'markID1','markId2')
+const { PerformanceObserver } = require('perf_hooks')
+
+const obs = new PerformanceObserver((list) => {
+  list.getEntries()
+})
+obs.observe({ entryTypes: ['mesaure'], buffered: true })
 ```
-```bash
-  node_trace.1.log
-```
+
+---
+
+## `entryTypes`
+
+
+ - **`measure`** 
+ - `mark` 
+ - `node` (Node.js only)
+ - `gc` (Node.js only)
+ - `http2` (Node.js only)
+ - `http` (Node.js only)
+ - `function` (Node.js only)
+
+
+---
+
+# 🍿
+## Let's see how that can be ᵃᵇused
+
 
 ---
 
@@ -188,28 +250,4 @@ v8.writeHeapSnapshot([filename])
 
 ---
 
-## PerformanceObserver
-```js
-const { PerformanceObserver } = require('perf_hooks')
-
-const obs = new PerformanceObserver((list) => {
-  list.getEntries()
-})
-obs.observe({ entryTypes: ['function'], buffered: true })
-```
-
----
-
-## `entryTypes`
-
-
- - `node` (Node.js only)
- - `mark` (available on the Web)
- - `measure` (available on the Web)
- - `gc` (Node.js only)
- - `function` (Node.js only)
- - `http2` (Node.js only)
- - `http` (Node.js only)
-
-
----
+# 👋
