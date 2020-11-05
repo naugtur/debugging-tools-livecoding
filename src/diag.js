@@ -36,5 +36,16 @@ const asyncHook = asyncHooks.createHook({
     if (!info) return;
     printMessage(`a [${info.triggerAsyncId}->${asyncId}] ${info.location}`);
   },
+  before(asyncId) {
+    const info = data.get(asyncId);
+    if (!info) return;
+    printMessage(`b [${info.triggerAsyncId}->${asyncId}] ${info.location}`);
+  },
+
+  promiseResolve(asyncId) {
+    const info = data.get(asyncId);
+    if (!info) return;
+    printMessage(`p [${info.triggerAsyncId}->${asyncId}] ${info.location}`);
+  },
 });
 asyncHook.enable();
