@@ -1,5 +1,6 @@
 "use strict";
 const asyncHooks = require("async_hooks");
+const filePath = process.argv[1];
 
 function printMessage(message) {
   process._rawDebug(message);
@@ -7,10 +8,14 @@ function printMessage(message) {
 function getLocation(stack) {
   const frames = stack.split("\n").slice(2); //skip the error and self
   const identified = frames.find((f) => f.includes("(/"));
+  const from = frames.find((f) => f.includes(filePath));
   if (!identified) {
     return null;
   }
-  return identified;
+  if (identified === from) {
+    return identified;
+  }
+  return identified + " FROM " + from;
 }
 
 const data = new Map();
