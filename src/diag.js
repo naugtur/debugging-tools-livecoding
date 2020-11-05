@@ -35,12 +35,17 @@ const asyncHook = asyncHooks.createHook({
   before(asyncId) {
     const info = data.get(asyncId);
     if (!info) return;
+    info.t1 = Date.now();
     performance.mark("before" + asyncId);
   },
 
   after(asyncId) {
     const info = data.get(asyncId);
     if (!info) return;
+    const t2 = Date.now();
+    if (t2 - info.t1 > 100) {
+      printMessage(`slowness detected ${info.location}`);
+    }
     performance.mark("after" + asyncId);
     performance.measure(
       `[${pad(asyncId)} from ${pad(info.triggerAsyncId)}] ${info.location}`,
