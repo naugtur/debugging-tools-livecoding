@@ -37,7 +37,7 @@ highlightTheme: "dracula"
 
 *Did you pay attention in the talks on Monday?*
 
----
+--
 
 ## Obvious simplification
 
@@ -52,6 +52,8 @@ highlightTheme: "dracula"
                               ( add callback to the queue )
 
 ```
+
+--
 
 ---
 
