@@ -4,6 +4,14 @@ const asyncHooks = require("async_hooks");
 function printMessage(message) {
   process._rawDebug(message);
 }
+function getLocation(stack) {
+  const frames = stack.split("\n").slice(2); //skip the error and self
+  const identified = frames.find((f) => f.includes("(/"));
+  if (!identified) {
+    return null;
+  }
+  return identified;
+}
 
 const data = new Map();
 
@@ -12,16 +20,16 @@ const asyncHook = asyncHooks.createHook({
   init(asyncId, type, triggerAsyncId) {
     const e = {};
     Error.captureStackTrace(e);
-    if (e.stack.includes("(/")) {
-      data.set(asyncId, { stack: e.stack, type, triggerAsyncId });
+    const location = getLocation(e.stack);
+    if (location) {
+      data.set(asyncId, { location, type, triggerAsyncId });
     }
   },
 
   after(asyncId) {
     const info = data.get(asyncId);
     if (!info) return;
-    printMessage(`[${info.triggerAsyncId}->${asyncId}] ${info.stack}`);
+    printMessage(`a [${info.triggerAsyncId}->${asyncId}] ${info.location}`);
   },
 });
-
 asyncHook.enable();
