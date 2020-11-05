@@ -1,7 +1,8 @@
 #!/bin/bash
 
-git checkout main
+git checkout -f main
 git checkout -- .
+rm -fr ./src
 git tag -d 0
 git branch -D demo
 git checkout -b demo
@@ -11,11 +12,10 @@ echo './history'>>.gitignore
 git add -A
 git commit -am "tools"
 git tag 0
-git checkout dev history
-git checkout dev sample
-git checkout dev package.json
-git checkout dev package-lock.json
-git restore --staged *
+git restore --source dev history
+git restore --source dev sample
+git restore --source dev package.json
+git restore --source dev package-lock.json
 git status
 mkdir src
 git add -A
@@ -29,9 +29,15 @@ do
     rm -fr ./src/*
     cp -r $var/* ./src/
     message=`cat ./src/COMMIT_MESSAGE`
+    tag=`cat ./src/TAG`
     rm ./src/COMMIT_MESSAGE
+    rm ./src/TAG
     git add ./src
     git commit -am "$message"
+    if [ $tag ]; then
+        git tag -d $tag
+        git tag $tag
+    fi
 done
 
 rm -fr history
