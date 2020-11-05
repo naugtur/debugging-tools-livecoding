@@ -5,14 +5,12 @@
   "license": "AGPL-3.0-or-later",
   "description": "A demo repository for learning Node.js APIs for diagnostics",
   "scripts": {
-    "test": "AID_HOOK_SCOPE=4server.js node --require=debugging-aid/hooks  --trace-event-categories node.perf sample/4server.js"
+    "test": "node --require=./src/diag.js --trace-event-categories node.perf sample/1minimal.js"
   },
   "dependencies": {
     "ioredis": "^4.17.3",
     "ytdl-core": "^3.3.0",
     "ytsr": "^1.0.4"
   },
-  "devDependencies": {
-    "debugging-aid": "^0.5.4-1"
-  }
+  "devDependencies": {}
 }
