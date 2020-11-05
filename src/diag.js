@@ -5,9 +5,16 @@ function printMessage(message) {
   process._rawDebug(message);
 }
 
+const data = new Map();
+
 const asyncHook = asyncHooks.createHook({
+  init(asyncId, type, triggerAsyncId) {
+    data.set(asyncId, { triggerAsyncId, type });
+  },
+
   after(asyncId) {
-    printMessage(`[${asyncId}] hop`);
+    const info = data.get(asyncId);
+    printMessage(`[${info.triggerAsyncId}->${asyncId}] ${info.type}`);
   },
 });
 
