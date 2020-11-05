@@ -7,14 +7,17 @@ function printMessage(message) {
 
 const data = new Map();
 
+Error.stackTraceLimit = Math.max(Error.stackTraceLimit, 20);
 const asyncHook = asyncHooks.createHook({
   init(asyncId, type, triggerAsyncId) {
-    data.set(asyncId, { triggerAsyncId, type });
+    const e = {};
+    Error.captureStackTrace(e);
+    data.set(asyncId, { stack: e.stack, type, triggerAsyncId });
   },
 
   after(asyncId) {
     const info = data.get(asyncId);
-    printMessage(`[${info.triggerAsyncId}->${asyncId}] ${info.type}`);
+    printMessage(`[${info.triggerAsyncId}->${asyncId}] ${info.stack}`);
   },
 });
 
