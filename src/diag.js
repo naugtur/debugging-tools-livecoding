@@ -43,7 +43,7 @@ const asyncHook = asyncHooks.createHook({
     if (!info) return;
     performance.mark("after" + asyncId);
     performance.measure(
-      `[${asyncId} from ${info.triggerAsyncId}] ${info.location}`,
+      `[${pad(asyncId)} from ${pad(info.triggerAsyncId)}] ${info.location}`,
       "before" + asyncId,
       "after" + asyncId
     );
@@ -55,3 +55,12 @@ const asyncHook = asyncHooks.createHook({
   },
 });
 asyncHook.enable();
+
+function pad(num) {
+  if (num < 10) return "00000" + num;
+  if (num < 100) return "0000" + num;
+  if (num < 1000) return "000" + num;
+  if (num < 10000) return "00" + num;
+  if (num < 100000) return "0" + num;
+  return num;
+}
