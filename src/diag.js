@@ -1,9 +1,13 @@
 "use strict";
 const asyncHooks = require("async_hooks");
 
+function printMessage(message) {
+  process._rawDebug(message);
+}
+
 const asyncHook = asyncHooks.createHook({
   after(asyncId) {
-    console.log(`[${asyncId}] hop`);
+    printMessage(`[${asyncId}] hop`);
   },
 });
 
