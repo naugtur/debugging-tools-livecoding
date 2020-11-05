@@ -23,7 +23,16 @@ const obs = new PerformanceObserver((list) => {
         return acc;
       }, {});
 
-      Object.assign(previous, current);
+    console.log(
+      Object.keys(current).map(
+        (key) =>
+          `${key}:${
+            (current[key] - previous[key]) /
+            Math.abs(current[key] - previous[key])
+          }`
+      )
+    );
+    Object.assign(previous, current);
   }
 });
 obs.observe({ entryTypes: ["gc"], buffered: false });
