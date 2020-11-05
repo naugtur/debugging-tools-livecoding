@@ -1,5 +1,6 @@
 "use strict";
 const asyncHooks = require("async_hooks");
+const { performance } = require("perf_hooks");
 const filePath = process.argv[1];
 
 function printMessage(message) {
@@ -29,6 +30,12 @@ const asyncHook = asyncHooks.createHook({
     if (location) {
       data.set(asyncId, { location, type, triggerAsyncId });
     }
+  },
+
+  before(asyncId) {
+    const info = data.get(asyncId);
+    if (!info) return;
+    performance.mark("before" + asyncId);
   },
 
   after(asyncId) {
