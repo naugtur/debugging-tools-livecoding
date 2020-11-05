@@ -41,6 +41,12 @@ const asyncHook = asyncHooks.createHook({
   after(asyncId) {
     const info = data.get(asyncId);
     if (!info) return;
+    performance.mark("after" + asyncId);
+    performance.measure(
+      `[${asyncId} from ${info.triggerAsyncId}] ${info.location}`,
+      "before" + asyncId,
+      "after" + asyncId
+    );
     printMessage(`a [${info.triggerAsyncId}->${asyncId}] ${info.location}`);
   },
 
