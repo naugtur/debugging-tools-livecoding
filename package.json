@@ -1,0 +1,16 @@
+{
+  "name": "debugging-tools-livecoding",
+  "version": "1.0.0",
+  "author": "naugtur",
+  "license": "AGPL-3.0-or-later",
+  "description": "A demo repository for learning Node.js APIs for diagnostics",
+  "scripts": {
+    "test": "node --require=./src/diag.js --trace-event-categories node.perf sample/1minimal.js"
+  },
+  "dependencies": {
+    "ioredis": "^4.17.3",
+    "ytdl-core": "^3.3.0",
+    "ytsr": "^1.0.4"
+  },
+  "devDependencies": {}
+}
