@@ -12,11 +12,14 @@ const asyncHook = asyncHooks.createHook({
   init(asyncId, type, triggerAsyncId) {
     const e = {};
     Error.captureStackTrace(e);
-    data.set(asyncId, { stack: e.stack, type, triggerAsyncId });
+    if (e.stack.includes("(/")) {
+      data.set(asyncId, { stack: e.stack, type, triggerAsyncId });
+    }
   },
 
   after(asyncId) {
     const info = data.get(asyncId);
+    if (!info) return;
     printMessage(`[${info.triggerAsyncId}->${asyncId}] ${info.stack}`);
   },
 });
