@@ -28,7 +28,7 @@ const obs = new PerformanceObserver((list) => {
         (key) =>
           `${key}:${
             (current[key] - previous[key]) /
-            Math.abs(current[key] - previous[key])
+            Math.abs(current[key] - previous[key] || 1)
           }`
       )
     );
